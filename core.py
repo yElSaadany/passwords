@@ -1,21 +1,43 @@
 from PasswordFile import PasswordFile
+from crypto import decrypt_file, load_key, write_key
 import pickle
 
 
-def open_password_file(password_file: PasswordFile = None):
+def open_password_file(password_file: str = None, key_path: str = None) -> None:
     # TODO: manipulate password file after asking for master_key
     if password_file is None:
-        path = input("Path to password file: ")
-        with open(path, "rb") as file:
-            password_file = pickle.load(file)
+        password_file = input("Path to password file: ")
 
-    password_file.menu()
+    if key_path is None:
+        key_path = input("Path to key file: ")
+
+    decrypt_file(password_file, load_key(key_path))
+
+    with open(password_file, "rb") as file:
+        password_object = pickle.load(file)
+
+    password_object.menu()
 
 
 def create_password_file():
-    master_key = input("Choose a master key (leave empty to generate one): ")
-    open_password_file(PasswordFile(master_key))
-    print(master_key)
+    print("-----------------------")
+    print("1. Generate new key")
+    print("2. Use existing key")
+    choice = int(input("Choose an option: "))
+
+    if choice == 1:
+        key = input("Choose a name for your key: ")
+        key = write_key(key)
+
+    elif choice == 2:
+        key = input("Path to key file: ")
+
+    else:
+        print("Please choose a valid option.")
+
+    password_file = PasswordFile(key)
+    password_file.save_to_file()
+    open_password_file("password_file.pswd", key)
 
 
 def menu():
