@@ -1,4 +1,5 @@
 from Account import Account
+from crypto import encrypt_file, load_key
 import pickle
 
 
@@ -25,6 +26,8 @@ class PasswordFile:
     def save_to_file(self, file_name="password_file.pswd"):
         with open(file_name, "wb") as file:
             pickle.dump(self, file)
+
+        encrypt_file(file_name, load_key(self.master_key))
 
     def menu(self):
         running = True
