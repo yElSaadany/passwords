@@ -21,6 +21,7 @@ def open_password_file(password_file: str = None, key_path: str = None) -> None:
 
     with open(password_file, "rb") as file:
         password_object = pickle.load(file)
+    password_object.master_key = key_path
 
     password_object.menu()
 
