@@ -21,7 +21,7 @@ class PasswordFile:
 
     def get_accounts(self):
         """Returns names of every service in the file."""
-        return self.accounts.keys()
+        return list(self.accounts.keys())
 
     def get_account_details(self, account_key):
         """Returns the details of a specific account.
@@ -68,8 +68,29 @@ class PasswordFile:
             choice = int(input("Your choice: "))
 
             if choice == 1:
-                account = self.get_account_details(input("Service: "))
-                print(account)
+                c = 1
+                accounts = self.get_accounts()
+                print("-------------------------")
+                for account in accounts:
+                    print(f"{c}. {account}")
+                    c += 1
+                print("0. Exit")
+                print("-------------------------")
+                service = input("Service: ")
+                if service != "0":
+                    if service.isdigit():
+                        try:
+                            service = accounts[int(service) - 1]
+                            account = self.get_account_details(service)
+                            print(account)
+                        except IndexError:
+                            print("The number you entered is not on the list.")
+                    else:
+                        try:
+                            account = self.get_account_details(service)
+                            print(account)
+                        except ValueError:
+                            print("The service you entered is not on the list.")
 
             elif choice == 2:
                 self.add_account(input("Service: "))
