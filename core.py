@@ -4,7 +4,13 @@ import pickle
 
 
 def open_password_file(password_file: str = None, key_path: str = None) -> None:
-    # TODO: manipulate password file after asking for master_key
+    """Open a Password File if the right key file is given.
+
+    Args:
+        password_file (str): Path to Password File
+        key_path (str): Path to Key file
+
+    """
     if password_file is None:
         password_file = input("Path to password file: ")
 
@@ -20,6 +26,7 @@ def open_password_file(password_file: str = None, key_path: str = None) -> None:
 
 
 def create_password_file():
+    """Creates a Password File by asking for a key."""
     print("-----------------------")
     print("1. Generate new key")
     print("2. Use existing key")
@@ -41,6 +48,7 @@ def create_password_file():
 
 
 def menu():
+    """Main CLI menu."""
     print("Welcome to Passwords, a utility to store your passwords safely.")
     print("1. Open Password File")
     print("2. Create New Password File")
@@ -63,6 +71,7 @@ def menu():
 
 
 def main():
+    """Main loop."""
     running = True
     while running:
         running = menu()

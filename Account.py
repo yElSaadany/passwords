@@ -1,5 +1,21 @@
 class Account:
+    """Class representation of an account.
+
+    An account means a service (mail, youtube, ...)
+    with its credentials.
+
+    Attributes:
+        key (str): name of the service
+        details (dict): credentials
+    """
+
     def __init__(self, key):
+        """Constructor.
+        
+        It does the heavy-lifting of storing the details
+        by asking with a CLI menu.
+
+        """
         self.key = key
 
         print("Create new account")
